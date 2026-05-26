@@ -22,7 +22,6 @@ const ContactForm = () => {
       let token = localStorage.getItem('ngo_token');
       
       if (!token) {
-        // Step 1: Clean username from name input
         const cleanUsername = name.trim().replace(/\s+/g, '').toLowerCase() + Math.floor(Math.random() * 1000);
         let authRes = await fetch(`${API_BASE}/auth/register`, {
           method: 'POST',
@@ -31,8 +30,6 @@ const ContactForm = () => {
         });
 
         let authData = await authRes.json();
-
-        // Fallback to login if user already exists
         if (!authRes.ok && (authData.message?.includes('exists') || authData.message?.includes('taken') || authData.message?.includes('credentials'))) {
           authRes = await fetch(`${API_BASE}/auth/login`, {
             method: 'POST',
@@ -50,7 +47,6 @@ const ContactForm = () => {
         localStorage.setItem('ngo_token', token);
       }
 
-      // Step 2: Form Submission
       const res = await fetch(`${API_BASE}/submissions`, {
         method: 'POST',
         headers: {

@@ -5,13 +5,10 @@ const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
 const User = require('../models/User');
 
-// @route    POST api/auth/register
-// @desc     Register user
-// @access   Public
+
 router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
-  // Simple server-side validation
   if (!username || !email || !password) {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
@@ -25,7 +22,7 @@ router.post('/register', async (req, res) => {
   }
 
   try {
-    // Check for existing user
+
     let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ message: 'User already exists with this email' });
@@ -42,13 +39,11 @@ router.post('/register', async (req, res) => {
       password
     });
 
-    // Hash password
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
 
-    // Return JWT token
     const payload = {
       user: {
         id: user.id,
@@ -79,31 +74,26 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @route    POST api/auth/login
-// @desc     Authenticate user & get token
-// @access   Public
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  // Simple server-side validation
   if (!email || !password) {
     return res.status(400).json({ message: 'Please enter all fields' });
   }
 
   try {
-    // Check for user
+
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Validate password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // Return JWT token
     const payload = {
       user: {
         id: user.id,
@@ -134,9 +124,7 @@ router.post('/login', async (req, res) => {
   }
 });
 
-// @route    GET api/auth/me
-// @desc     Get user data
-// @access   Private
+
 router.get('/me', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');

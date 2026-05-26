@@ -37,6 +37,13 @@ mongoose.connect(dbURI)
     process.exit(1);
   });
 
+app.get('/', (req, res) => {
+  res.json({
+    message: 'NGO backend is running',
+    api: '/api',
+  });
+});
+
 // Define Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/submissions', require('./routes/submissions'));
