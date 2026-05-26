@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE =
+  import.meta.env.VITE_API_URL || 'https://ngoassignment.onrender.com/api';
 
 const ContactForm = () => {
   const [name, setName] = useState('');

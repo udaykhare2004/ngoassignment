@@ -3,6 +3,13 @@
 .env.*
 **/.env
 **/.env.*
+# Vite public env (API URLs only — safe to commit)
+!.env.development
+!.env.production
+!.env.example
+!**/.env.development
+!**/.env.production
+!**/.env.example
 
 # Node
 node_modules/

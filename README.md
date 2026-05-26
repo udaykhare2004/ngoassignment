@@ -22,6 +22,19 @@ This repository contains a simple full-stack app:
    - `npm install`
    - `npm run dev` (Vite dev server)
 
+## Deployment
+
+| Service  | URL |
+|----------|-----|
+| Frontend | https://ngoassignment.vercel.app |
+| Backend  | https://ngoassignment.onrender.com |
+
+The frontend calls `https://ngoassignment.onrender.com/api` in production (see `frontend/.env.production`). Local dev uses `http://localhost:5000/api` via `frontend/.env.development`.
+
+**Render (backend):** set `MONGO_URI`, `JWT_SECRET`, and optionally `FRONTEND_URL=https://ngoassignment.vercel.app`.
+
+**Vercel (frontend):** optional override — `VITE_API_URL=https://ngoassignment.onrender.com/api` (already set in `.env.production` for builds).
+
 ## API Routes (backend)
 - `GET/POST/PUT/DELETE /api/auth`
 - `GET/POST/PUT/DELETE /api/submissions`
